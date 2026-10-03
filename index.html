@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raj Vadhavana — Web Developer & BCA Student</title>
+    <meta name="description" content="Raj Vadhavana - Web Developer & BCA Student at B.P. College of Computer Studies. Skilled in HTML, CSS, JavaScript, PHP, MySQL, and Python.">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="#home" class="logo">Raj Vadhavana</a>
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <nav class="navbar">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#experience">Experience</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- HOME -->
+    <section class="home" id="home">
+        <div class="home-inner">
+            <div class="home-visual">
+                <lottie-player
+                    src="https://assets1.lottiefiles.com/packages/lf20_vnikrcia.json"
+                    background="transparent"
+                    speed="1"
+                    style="width: 340px; height: 380px;"
+                    loop autoplay>
+                </lottie-player>
+            </div>
+            <div class="home-content">
+                <div class="section-badge"><i class='bx bx-code-alt'></i> Available for Work</div>
+                <h3 id="hero-greeting">Hello, I'm Raj</h3>
+                <h1 id="hero-name">Raj Vadhavana</h1>
+                <div class="typed-line">And I'm a <span class="multiple-text"></span></div>
+                <p class="home-lead" id="hero-tagline">
+                    I create beautiful, responsive websites with modern technologies.
+                    Passionate about solving problems and building digital experiences.
+                </p>
+                <div class="social-media" id="hero-socials">
+                    <a href="https://www.linkedin.com/in/Raj_Vadhavana/" id="link-linkedin" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+                    <a href="https://github.com/RajVadhavana" id="link-github" target="_blank" title="GitHub"><i class='bx bxl-github'></i></a>
+                </div>
+                <div class="home-cta">
+                    <a href="raj (1).pdf" class="btn" id="cv-btn" target="_blank"><i class='bx bx-download'></i> Download CV</a>
+                    <a href="#contact" class="btn-outline"><i class='bx bx-envelope'></i> Contact Me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <div class="section-badge"><i class='bx bx-user'></i> About Me</div>
+            <h2 class="heading" style="text-align:left; margin-bottom: 2rem;">Who I <span>Am</span></h2>
+            <h3>I'm a <span id="about-title">Frontend Developer & BCA Student</span></h3>
+            <p id="about-short">Hello! I'm Raj, a Passionate Web Developer & BCA Student skilled in HTML, CSS & JavaScript | Focused on clean UI, fast performance & accessibility | Exploring Full-Stack, PHP, MySQL & Python</p>
+            <p class="about-para hidden" id="about-long">I'm a passionate Web Developer who loves turning ideas into interactive and visually appealing websites. Currently pursuing my B.C.A. at B.P. College of Computer Studies, I enjoy creating designs that are not only beautiful but also responsive and user-friendly. For me, coding is like solving a creative puzzle—every project is a chance to bring something exciting to life.</p>
+            <a href="#" class="btn read-more-btn" style="margin-top:2rem;">Read More <i class='bx bx-chevron-down'></i></a>
+        </div>
+        <div class="about-img">
+            <div class="about-img-wrap">
+                <img src="Resume.JPG" alt="Raj Vadhavana">
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills" id="skills">
+        <div class="section-badge" style="margin: 0 auto 1.5rem;"><i class='bx bx-trophy'></i> My Expertise</div>
+        <h2 class="heading">My <span>Skills</span></h2>
+        <div class="skills-container" id="skills-container"></div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects" id="projects">
+        <div class="section-badge" style="margin: 0 auto 1.5rem;"><i class='bx bx-folder-open'></i> Portfolio</div>
+        <h2 class="heading">Featured <span>Projects</span></h2>
+        <div class="projects-container" id="projects-container"></div>
+    </section>
+
+    <!-- EXPERIENCE & EDUCATION -->
+    <section class="experience" id="experience">
+        <div class="section-badge" style="margin: 0 auto 1.5rem;"><i class='bx bx-time-five'></i> My Journey</div>
+        <h2 class="heading">Experience & <span>Education</span></h2>
+        <div class="exp-edu-grid">
+            <div class="exp-col">
+                <h3 class="col-title"><i class='bx bx-briefcase'></i> Experience</h3>
+                <div id="experience-container"></div>
+            </div>
+            <div class="edu-col">
+                <h3 class="col-title"><i class='bx bx-graduation'></i> Education</h3>
+                <div id="education-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="section-badge" style="margin: 0 auto 1.5rem;"><i class='bx bx-send'></i> Get In Touch</div>
+        <h2 class="heading">Contact <span>Me</span></h2>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h3>Let's work <span class="gradient-text">together!</span></h3>
+                <p>Have a project in mind? Want to collaborate? Or just want to say hi? My inbox is always open.</p>
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><i class='bx bx-envelope'></i></div>
+                    <span id="contact-email-display">rajvadhavana64@gmail.com</span>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><i class='bx bxl-linkedin'></i></div>
+                    <span>linkedin.com/in/Raj_Vadhavana</span>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><i class='bx bxl-github'></i></div>
+                    <span>github.com/RajVadhavana</span>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <div class="success-msg" id="success-msg">
+                    <i class='bx bx-check-circle' style="font-size:2rem; vertical-align:middle; margin-right:0.5rem;"></i>
+                    Message sent! I'll get back to you soon. ✨
+                </div>
+                <form id="contact-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group-c">
+                            <label>Full Name *</label>
+                            <input type="text" id="contact-name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group-c">
+                            <label>Email Address *</label>
+                            <input type="email" id="contact-email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group-c">
+                            <label>Phone Number</label>
+                            <input type="tel" id="contact-phone" placeholder="+91 00000 00000">
+                        </div>
+                        <div class="form-group-c">
+                            <label>Subject</label>
+                            <input type="text" id="contact-subject" placeholder="Project inquiry...">
+                        </div>
+                    </div>
+                    <div class="form-full">
+                        <div class="form-group-c">
+                            <label>Your Message *</label>
+                            <textarea id="contact-message" placeholder="Tell me about your project or idea..." required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="send-btn" id="send-btn">
+                        <i class='bx bx-send'></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-logo">Raj Vadhavana</div>
+        <div class="social-media">
+            <a href="https://www.linkedin.com/in/Raj_Vadhavana/" id="footer-linkedin" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+            <a href="https://github.com/RajVadhavana" id="footer-github" target="_blank" title="GitHub"><i class='bx bxl-github'></i></a>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 Raj Vadhavana &mdash; Built with ❤️ | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="script.js"></script>
+</body>
+</html>
