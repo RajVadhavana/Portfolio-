@@ -1,13 +1,16 @@
 // ==================== CONFIG ====================
-const ADMIN_PASSWORD = 'raj@admin123';
 
-// GitHub Config Defaults
-const DEFAULT_GH_OWNER = 'RajVadhavana';
-const DEFAULT_GH_REPO = 'portfolio-';
-const DEFAULT_GH_BRANCH = 'main';
-const GH_FILE_PATH = 'data.json';
+// Change this password to your new admin password
+const ADMIN_PASSWORD = 'Raj@1223';
+
+// Cloudflare Worker handles GitHub authentication.
+// NEVER put GitHub Personal Access Token here.
+
+const WORKER_URL =
+    'https://raj-portfolio-api.rvadhavana74.workers.dev/';
 
 // ==================== STATE ====================
+
 let portfolioData = {};
 
 // ==================== LOGIN ====================
@@ -58,224 +61,82 @@ async function showPanel() {
     adminPanel.classList.remove('hidden');
     await loadData();
     populateAllForms();
-    updateGitHubStatusUI();
 }
 
-// ==================== GITHUB SETTINGS ====================
-function getGitHubConfig() {
-    return {
-        token: (localStorage.getItem('gh_token') || '').trim(),
-        owner: (localStorage.getItem('gh_owner') || DEFAULT_GH_OWNER).trim(),
-        repo: (localStorage.getItem('gh_repo') || DEFAULT_GH_REPO).trim(),
-        branch: (localStorage.getItem('gh_branch') || DEFAULT_GH_BRANCH).trim(),
-        path: GH_FILE_PATH
-    };
-}
 
-function initGitHubSettings() {
-    const config = getGitHubConfig();
-    const tokenInput = document.getElementById('gh-token');
-    const ownerInput = document.getElementById('gh-owner');
-    const repoInput = document.getElementById('gh-repo');
-    const branchInput = document.getElementById('gh-branch');
-    const toggleGhToken = document.getElementById('toggle-gh-token');
+// ==================== LOAD DATA ====================
 
-    if (tokenInput) tokenInput.value = config.token;
-    if (ownerInput) ownerInput.value = config.owner;
-    if (repoInput) repoInput.value = config.repo;
-    if (branchInput) branchInput.value = config.branch;
+async function loadData() {
+    let loaded = false;
 
-    if (toggleGhToken && tokenInput) {
-        toggleGhToken.onclick = () => {
-            if (tokenInput.type === 'password') {
-                tokenInput.type = 'text';
-                toggleGhToken.className = 'bx bx-hide toggle-pw';
-            } else {
-                tokenInput.type = 'password';
-                toggleGhToken.className = 'bx bx-show toggle-pw';
+    // 1. Load public data.json
+    try {
+        const response = await fetch(
+            '../data.json?t=' + Date.now()
+        );
+
+        if (response.ok) {
+            portfolioData = await response.json();
+            loaded = true;
+
+            localStorage.setItem(
+                'portfolioData',
+                JSON.stringify(portfolioData)
+            );
+        }
+    } catch (error) {
+        console.warn(
+            'data.json loading failed:',
+            error.message
+        );
+    }
+
+    // 2. Fallback to localStorage
+    if (!loaded) {
+        const localData =
+            localStorage.getItem('portfolioData');
+
+        if (localData) {
+            try {
+                portfolioData = JSON.parse(localData);
+                loaded = true;
+            } catch (error) {
+                console.warn(
+                    'Local data parsing failed:',
+                    error.message
+                );
             }
+        }
+    }
+
+    // 3. Empty default data
+    if (!loaded) {
+        portfolioData = {
+            hero: {
+                name: '',
+                greeting: '',
+                roles: [],
+                tagline: '',
+                linkedin: '',
+                github: '',
+                cv: ''
+            },
+
+            contactEmail: 'rajvadhavana64@gmail.com',
+
+            about: {
+                title: '',
+                short: '',
+                long: ''
+            },
+
+            skills: [],
+            projects: [],
+            experience: [],
+            education: []
         };
     }
 }
-
-function saveGitHubSettings() {
-    const token = document.getElementById('gh-token')?.value.trim() || '';
-    const owner = document.getElementById('gh-owner')?.value.trim() || DEFAULT_GH_OWNER;
-    const repo = document.getElementById('gh-repo')?.value.trim() || DEFAULT_GH_REPO;
-    const branch = document.getElementById('gh-branch')?.value.trim() || DEFAULT_GH_BRANCH;
-
-    localStorage.setItem('gh_token', token);
-    localStorage.setItem('gh_owner', owner);
-    localStorage.setItem('gh_repo', repo);
-    localStorage.setItem('gh_branch', branch);
-
-    updateGitHubStatusUI();
-
-    if (token) {
-        showToast('🔑 GitHub Settings saved! Now testing connection...');
-        testGitHubConnection();
-    } else {
-        showToast('⚠️ GitHub Settings saved (No Token provided).');
-    }
-}
-
-function updateGitHubStatusUI() {
-    const badge = document.getElementById('github-status-badge');
-    const statusText = document.getElementById('gh-status-text');
-
-    if (!badge || !statusText) return;
-
-    badge.className = 'gh-status-badge connected';
-
-    statusText.textContent = 'Cloudflare Worker: Connected';
-
-    badge.title =
-        'Secure GitHub connection through Cloudflare Worker';
-}
-
-async function testGitHubConnection() {
-    const config = getGitHubConfig();
-    const resultBox = document.getElementById('gh-test-result');
-    const testBtn = document.getElementById('test-gh-btn');
-
-    if (!config.token) {
-        if (resultBox) {
-            resultBox.className = 'gh-result-box error';
-            resultBox.innerHTML = `<strong>❌ No Token Found:</strong> Please paste your GitHub Personal Access Token above and click Save.`;
-            resultBox.classList.remove('hidden');
-        }
-        showToast('❌ Please enter your GitHub Personal Access Token first.');
-        return;
-    }
-
-    if (testBtn) {
-        testBtn.disabled = true;
-        testBtn.innerHTML = `<i class='bx bx-loader-alt bx-spin'></i> Testing...`;
-    }
-
-    try {
-        const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.path}?ref=${config.branch}`;
-        const res = await fetch(url, {
-            headers: {
-                'Authorization': `Bearer ${config.token}`,
-                'Accept': 'application/vnd.github+json',
-                'X-GitHub-Api-Version': '2022-11-28'
-            }
-        });
-
-        if (res.ok) {
-            const data = await res.json();
-            if (resultBox) {
-                resultBox.className = 'gh-result-box success';
-                resultBox.innerHTML = `
-                    <strong>✅ GitHub Connection Successful!</strong><br>
-                    • Repository: <strong>${config.owner}/${config.repo}</strong> (${config.branch})<br>
-                    • File target: <strong>${config.path}</strong> (Current SHA: <code>${data.sha.substring(0, 7)}</code>)<br>
-                    ✨ Direct commit is ready. Any changes saved in Admin will automatically commit directly to your GitHub repository!
-                `;
-                resultBox.classList.remove('hidden');
-            }
-            updateGitHubStatusUI();
-            showToast('✅ GitHub connection test passed!');
-        } else {
-            const err = await res.json().catch(() => ({}));
-            const msg = err.message || res.statusText;
-            if (resultBox) {
-                resultBox.className = 'gh-result-box error';
-                resultBox.innerHTML = `
-                    <strong>❌ Connection Failed (${res.status}):</strong> ${msg}<br>
-                    Please verify your token permissions (ensure <code>repo</code> or <code>Contents: Read and write</code> is enabled) and repository name.
-                `;
-                resultBox.classList.remove('hidden');
-            }
-            showToast(`❌ GitHub Error: ${msg}`);
-        }
-    } catch (e) {
-        if (resultBox) {
-            resultBox.className = 'gh-result-box error';
-            resultBox.innerHTML = `<strong>❌ Network Error:</strong> ${e.message}`;
-            resultBox.classList.remove('hidden');
-        }
-        showToast(`❌ Network Error: ${e.message}`);
-    } finally {
-        if (testBtn) {
-            testBtn.disabled = false;
-            testBtn.innerHTML = `<i class='bx bx-check-shield'></i> Test Connection`;
-        }
-    }
-}
-
-function switchToGithubTab() {
-    const ghTabNav = document.querySelector('.nav-item[data-tab="github"]');
-    if (ghTabNav) ghTabNav.click();
-}
-
-// UTF-8 to Base64 helper (handles unicode and emojis)
-function utf8ToBase64(str) {
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-        return String.fromCharCode('0x' + p1);
-    }));
-}
-
-// ==================== LOAD DATA ====================
-async function loadData() {
-    let loaded = false;
-    const config = getGitHubConfig();
-
-    // 1. Try Fetching directly from GitHub API if token exists
-    if (config.token) {
-        try {
-            const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.path}?ref=${config.branch}`;
-            const res = await fetch(url, {
-                headers: {
-                    'Authorization': `Bearer ${config.token}`,
-                    'Accept': 'application/vnd.github+json'
-                }
-            });
-            if (res.ok) {
-                const json = await res.json();
-                if (json.content) {
-                    const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
-                    portfolioData = JSON.parse(decoded);
-                    loaded = true;
-                    localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
-                }
-            }
-        } catch(e) {
-            console.warn('GitHub API fetch warning:', e.message);
-        }
-    }
-
-    // 2. Fallback: Fetch local ../data.json
-    if (!loaded) {
-        try {
-            const res = await fetch('../data.json?t=' + Date.now());
-            if (res.ok) {
-                portfolioData = await res.json();
-                loaded = true;
-                localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
-            }
-        } catch(e) {
-            console.warn('Local data.json fetch error:', e.message);
-        }
-    }
-
-    // 3. Fallback: localStorage
-    if (!loaded) {
-        const local = localStorage.getItem('portfolioData');
-        if (local) {
-            try { portfolioData = JSON.parse(local); } catch(e2) {}
-        } else {
-            portfolioData = {
-                hero: { name: '', greeting: '', roles: [], tagline: '', linkedin: '', github: '', cv: '' },
-                contactEmail: 'rajvadhavana64@gmail.com',
-                about: { title: '', short: '', long: '' },
-                skills: [], projects: [], experience: [], education: []
-            };
-        }
-    }
-}
-
 // ==================== POPULATE FORMS ====================
 function populateAllForms() {
     const h = portfolioData.hero || {};
