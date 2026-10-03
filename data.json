@@ -2,41 +2,88 @@
   "hero": {
     "name": "Raj Vadhavana",
     "greeting": "Hello, I'm Raj",
-    "roles": ["Frontend Developer", "Web Designer", "BCA Student"],
+    "roles": [
+      "Frontend Developer",
+      "Web Designer",
+      "BCA Student"
+    ],
     "tagline": "I create beautiful, responsive websites with modern technologies. Passionate about solving problems and building digital experiences.",
     "linkedin": "https://www.linkedin.com/in/Raj_Vadhavana/",
     "github": "https://github.com/RajVadhavana",
     "cv": "raj (1).pdf"
   },
-  "contactEmail": "rajvadhavana64@gmail.com",
+  "contactEmail": "rvadhavana74@gmail.com",
   "about": {
     "title": "Frontend Developer & BCA Student",
     "short": "Hello! I'm Raj, a Passionate Web Developer & BCA Student skilled in HTML, CSS & JavaScript | Focused on clean UI, fast performance & accessibility | Exploring Full-Stack, PHP, MySQL & Python",
     "long": "I'm a passionate Web Developer who loves turning ideas into interactive and visually appealing websites. Currently pursuing my B.C.A. at B.P. College of Computer Studies, I enjoy creating designs that are not only beautiful but also responsive and user-friendly. For me, coding is like solving a creative puzzle—every project is a chance to bring something exciting to life."
   },
   "skills": [
-    { "name": "HTML5", "icon": "https://unpkg.com/simple-icons@v9/icons/html5.svg", "alt": "HTML5" },
-    { "name": "CSS3", "icon": "https://unpkg.com/simple-icons@v9/icons/css3.svg", "alt": "CSS3" },
-    { "name": "JavaScript", "icon": "https://unpkg.com/simple-icons@v9/icons/javascript.svg", "alt": "JavaScript" },
-    { "name": "Python", "icon": "https://unpkg.com/simple-icons@v9/icons/python.svg", "alt": "Python" },
-    { "name": "PHP", "icon": "https://unpkg.com/simple-icons@v9/icons/php.svg", "alt": "PHP" },
-    { "name": "MySQL", "icon": "https://unpkg.com/simple-icons@v9/icons/mysql.svg", "alt": "MySQL" },
-    { "name": "Git", "icon": "https://unpkg.com/simple-icons@v9/icons/git.svg", "alt": "Git" },
-    { "name": "UI/UX Design", "icon": "https://unpkg.com/simple-icons@v9/icons/adobexd.svg", "alt": "UI/UX Design" }
+    {
+      "name": "HTML5",
+      "icon": "https://unpkg.com/simple-icons@v9/icons/html5.svg",
+      "alt": "HTML5"
+    },
+    {
+      "name": "CSS3",
+      "icon": "https://unpkg.com/simple-icons@v9/icons/css3.svg",
+      "alt": "CSS3"
+    },
+    {
+      "name": "JavaScript",
+      "icon": "https://unpkg.com/simple-icons@v9/icons/javascript.svg",
+      "alt": "JavaScript"
+    },
+    {
+      "name": "Python",
+      "icon": "https://unpkg.com/simple-icons@v9/icons/python.svg",
+      "alt": "Python"
+    },
+    {
+      "name": "PHP",
+      "icon": "https://unpkg.com/simple-icons@v9/icons/php.svg",
+      "alt": "PHP"
+    },
+    {
+      "name": "MySQL",
+      "icon": "https://unpkg.com/simple-icons@v9/icons/mysql.svg",
+      "alt": "MySQL"
+    },
+    {
+      "name": "Git",
+      "icon": "https://unpkg.com/simple-icons@v9/icons/git.svg",
+      "alt": "Git"
+    },
+    {
+      "name": "UI/UX Design",
+      "icon": "https://unpkg.com/simple-icons@v9/icons/adobexd.svg",
+      "alt": "UI/UX Design"
+    }
   ],
   "projects": [
     {
       "title": "MW Flow",
+      "tech": [
+        "JavaScript",
+        "HTML5",
+        "CSS3",
+        "PHP",
+        "MySQL"
+      ],
       "description": "A comprehensive workflow automation and task management web application designed to streamline project pipelines and task tracking. (Currently in active development).",
-      "tech": ["JavaScript", "HTML5", "CSS3", "PHP", "MySQL"],
       "github": "",
       "live": "",
       "icon": "bx bx-git-repo-forked"
     },
     {
       "title": "Hostel Admission System",
+      "tech": [
+        "PHP",
+        "MySQL",
+        "HTML",
+        "CSS"
+      ],
       "description": "A complete hostel admission management website with student registration, room allocation and admin panel.",
-      "tech": ["PHP", "MySQL", "HTML", "CSS"],
       "github": "",
       "live": "",
       "icon": "bx bx-building"
@@ -47,8 +94,8 @@
       "role": "Web Development (Learning & Projects)",
       "company": "Academic & Self-Taught Projects",
       "duration": "2023 - Present",
-      "description": "Building web applications using HTML, CSS, JavaScript, PHP, and MySQL. Creating responsive interfaces, implementing database systems, and exploring backend engineering.",
-      "icon": "bx bx-laptop"
+      "icon": "bx bx-laptop",
+      "description": "Building web applications using HTML, CSS, JavaScript, PHP, and MySQL. Creating responsive interfaces, implementing database systems, and exploring backend engineering."
     }
   ],
   "education": [
