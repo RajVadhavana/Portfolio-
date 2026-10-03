@@ -3,7 +3,7 @@ const ADMIN_PASSWORD = 'raj@admin123';
 
 // GitHub Config Defaults
 const DEFAULT_GH_OWNER = 'RajVadhavana';
-const DEFAULT_GH_REPO = 'portfolio';
+const DEFAULT_GH_REPO = 'Portfolio-';
 const DEFAULT_GH_BRANCH = 'main';
 const GH_FILE_PATH = 'data.json';
 
