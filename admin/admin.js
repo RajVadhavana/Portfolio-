@@ -3,7 +3,7 @@ const ADMIN_PASSWORD = 'raj@admin123';
 
 // GitHub Config Defaults
 const DEFAULT_GH_OWNER = 'RajVadhavana';
-const DEFAULT_GH_REPO = 'Portfolio-';
+const DEFAULT_GH_REPO = 'portfolio-';
 const DEFAULT_GH_BRANCH = 'main';
 const GH_FILE_PATH = 'data.json';
 
@@ -596,100 +596,67 @@ function collectItemRows(containerId, fields) {
 
 // ==================== DIRECT GITHUB COMMIT ====================
 async function commitToGitHubDirectly(jsonData) {
-    const config = getGitHubConfig();
-    if (!config.token) {
-        throw new Error('NO_TOKEN');
-    }
 
-    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.path}`;
-    
-    // 1. Get current file sha
-    let sha = null;
-    try {
-        const getRes = await fetch(`${url}?ref=${config.branch}`, {
-            headers: {
-                'Authorization': `Bearer ${config.token}`,
-                'Accept': 'application/vnd.github+json'
-            }
-        });
-        if (getRes.ok) {
-            const fileInfo = await getRes.json();
-            sha = fileInfo.sha;
-        }
-    } catch(e) {
-        console.warn('Could not retrieve existing SHA:', e);
-    }
+    const WORKER_URL =
+        "https://raj-portfolio-api.rvadhavana74.workers.dev/";
 
-    // 2. Base64 encode JSON
-    const jsonString = JSON.stringify(jsonData, null, 2);
-    const base64Content = utf8ToBase64(jsonString);
-
-    // 3. PUT Commit to GitHub
-    const putBody = {
-        message: `Update portfolio content via Admin Dashboard [${new Date().toLocaleString()}]`,
-        content: base64Content,
-        branch: config.branch
-    };
-    if (sha) putBody.sha = sha;
-
-    const putRes = await fetch(url, {
-        method: 'PUT',
+    const response = await fetch(WORKER_URL, {
+        method: "POST",
         headers: {
-            'Authorization': `Bearer ${config.token}`,
-            'Accept': 'application/vnd.github+json',
-            'Content-Type': 'application/json',
-            'X-GitHub-Api-Version': '2022-11-28'
+            "Content-Type": "application/json"
         },
-        body: JSON.stringify(putBody)
+        body: JSON.stringify(jsonData)
     });
 
-    if (!putRes.ok) {
-        const errJson = await putRes.json().catch(() => ({}));
-        throw new Error(errJson.message || `GitHub commit failed (${putRes.status})`);
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+        throw new Error(
+            result.error || "Cloudflare Worker failed."
+        );
     }
 
-    return await putRes.json();
+    return result;
 }
-
 // ==================== SAVE ====================
 async function saveAllData() {
     collectFormData();
 
-    // Save locally to localStorage immediately
-    localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+    // Save locally as backup
+    localStorage.setItem(
+        'portfolioData',
+        JSON.stringify(portfolioData)
+    );
 
-    const config = getGitHubConfig();
     const saveBtn = document.getElementById('save-btn');
+
     saveBtn.disabled = true;
 
-    // Check if GitHub token is present
-    if (!config.token) {
-        saveBtn.disabled = false;
-        showToast('⚠️ Saved locally. Connect your GitHub Token in "GitHub Sync" for direct commits!');
-        switchToGithubTab();
-        return;
-    }
-
-    saveBtn.innerHTML = `<i class='bx bx-loader-alt bx-spin'></i> Committing to GitHub...`;
+    saveBtn.innerHTML =
+        `<i class='bx bx-loader-alt bx-spin'></i> Saving...`;
 
     try {
+        // Send data to Cloudflare Worker
         await commitToGitHubDirectly(portfolioData);
-        showToast('🚀 Saved! Changes committed directly to your GitHub repository!');
-        updateGitHubStatusUI();
-    } catch(e) {
-        if (e.message === 'NO_TOKEN') {
-            showToast('⚠️ Please enter GitHub Personal Access Token in GitHub Sync tab.');
-            switchToGithubTab();
-        } else {
-            console.error('GitHub Commit Error:', e);
-            showToast(`❌ GitHub Error: ${e.message}`);
-        }
+
+        showToast(
+            '🚀 Saved successfully to GitHub!'
+        );
+
+    } catch (e) {
+        console.error('Cloudflare Worker Error:', e);
+
+        showToast(
+            `❌ Save failed: ${e.message}`
+        );
+
     } finally {
-        saveBtn.innerHTML = `<i class='bx bx-save'></i> Save to GitHub`;
+        saveBtn.innerHTML =
+            `<i class='bx bx-save'></i> Save to GitHub`;
+
         saveBtn.disabled = false;
     }
 }
-
 // ==================== EXPORT DATA.JSON (BACKUP) ====================
 function exportDataJson() {
     collectFormData();
