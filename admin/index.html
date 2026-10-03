@@ -34,7 +34,7 @@
                 <i class='bx bx-log-in'></i> Login
             </button>
         </form>
-        <p class="hint">Default password: <strong>raj@admin123</strong></p>
+
     </div>
 </div>
 
@@ -72,9 +72,7 @@
             <a href="#" class="nav-item" data-tab="contact">
                 <i class='bx bx-envelope'></i> <span>Contact & Email</span>
             </a>
-            <a href="#" class="nav-item" data-tab="github">
-                <i class='bx bxl-github'></i> <span>GitHub Sync</span>
-            </a>
+          
         </nav>
         <div class="sidebar-footer">
             <a href="../index.html" target="_blank" class="view-site-btn">
@@ -92,9 +90,7 @@
             <button class="menu-toggle" id="menu-toggle"><i class='bx bx-menu'></i></button>
             <div class="topbar-title" id="topbar-title">Hero Section</div>
             <div class="topbar-actions">
-                <span id="github-status-badge" class="gh-status-badge disconnected" onclick="switchToGithubTab()" title="GitHub Sync Status">
-                    <i class='bx bxl-github'></i> <span id="gh-status-text">GitHub: Not Connected</span>
-                </span>
+              
                 <button class="export-btn" id="export-btn" onclick="exportDataJson()" title="Download updated data.json file as backup">
                     <i class='bx bx-download'></i> Backup JSON
                 </button>
@@ -241,89 +237,7 @@
                 </div>
             </section>
 
-            <!-- ===== GITHUB DIRECT SYNC TAB ===== -->
-            <section class="tab-content hidden" id="tab-github">
-                <div class="section-card">
-                    <h2 class="section-title"><i class='bx bxl-github'></i> Direct GitHub Sync Settings</h2>
-                    <p style="color: var(--text-muted); font-size: 1.45rem; margin-bottom: 2.4rem; line-height: 1.6;">
-                        Connect your GitHub Personal Access Token once. Whenever you click <strong>"Save to GitHub"</strong>, changes will be directly committed to your GitHub repository (<code style="background:var(--primary-light); color:var(--primary); padding:2px 6px; border-radius:4px;">data.json</code>) without touching git or running any terminal commands!
-                    </p>
-
-                    <div class="form-grid">
-                        <div class="form-group full">
-                            <label>GitHub Personal Access Token (PAT) <small>(Classic or Fine-grained with "repo" or "Contents: Read/Write" scope)</small></label>
-                            <div class="input-wrap">
-                                <i class='bx bx-key'></i>
-                                <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-                                <i class='bx bx-show toggle-pw' id="toggle-gh-token" style="cursor: pointer;"></i>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>GitHub Username / Owner</label>
-                            <div class="input-wrap">
-                                <i class='bx bx-user'></i>
-                                <input type="text" id="gh-owner" placeholder="RajVadhavana" value="RajVadhavana">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Repository Name</label>
-                            <div class="input-wrap">
-                                <i class='bx bx-folder'></i>
-                                <input type="text" id="gh-repo" placeholder="portfolio" value="portfolio">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Branch</label>
-                            <div class="input-wrap">
-                                <i class='bx bx-git-branch'></i>
-                                <input type="text" id="gh-branch" placeholder="main" value="main">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Target File</label>
-                            <div class="input-wrap">
-                                <i class='bx bx-file'></i>
-                                <input type="text" id="gh-filepath" placeholder="data.json" value="data.json" readonly style="background:#f8fafc; color:#64748b;">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="github-actions" style="margin-top: 2.4rem; display: flex; gap: 1.2rem; flex-wrap: wrap; align-items: center;">
-                        <button class="test-gh-btn" id="test-gh-btn" onclick="testGitHubConnection()" type="button">
-                            <i class='bx bx-check-shield'></i> Test Connection
-                        </button>
-                        <button class="save-gh-btn" id="save-gh-btn" onclick="saveGitHubSettings()" type="button">
-                            <i class='bx bx-save'></i> Save GitHub Settings
-                        </button>
-                        <a href="https://github.com/settings/tokens/new?scopes=repo&description=Raj+Portfolio+Admin+Sync" target="_blank" class="generate-token-link">
-                            <i class='bx bx-link-external'></i> Generate Token on GitHub
-                        </a>
-                    </div>
-
-                    <div id="gh-test-result" class="gh-result-box hidden"></div>
-
-                    <!-- Instructions Card -->
-                    <div class="instructions-card" style="margin-top: 3.2rem; padding: 2.4rem; background: var(--primary-light); border-radius: 14px; border: 1.5px solid #dbeafe;">
-                        <h3 style="font-size: 1.6rem; color: #1e40af; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;">
-                            <i class='bx bx-info-circle'></i> GitHub Token Kaise Banaye? (1 Minute Guide)
-                        </h3>
-                        <ol style="margin-left: 2rem; font-size: 1.4rem; color: #334155; line-height: 1.8;">
-                            <li>Upar diye gaye <strong>"Generate Token on GitHub"</strong> button par click karein.</li>
-                            <li>GitHub open hoga. Waha <strong>Note:</strong> (e.g. Portfolio Admin) dalein aur <strong>Expiration</strong> me <em>"No expiration"</em> ya <em>"90 days"</em> select karein.</li>
-                            <li>Select scopes me <code style="background:#fff; padding:2px 6px; border-radius:4px; font-weight:700; color:#0051ff;">repo</code> (Full control of private/public repositories) checkbox tick karein.</li>
-                            <li>Page ke bottom me <strong>"Generate token"</strong> green button dabayein.</li>
-                            <li>Token copy karke yaha <strong>GitHub Personal Access Token</strong> box me paste karein aur <strong>"Save GitHub Settings"</strong> dabayein.</li>
-                        </ol>
-                        <p style="margin-top: 1.2rem; font-size: 1.35rem; color: #166534; font-weight: 600;">
-                            ✨ Iske baad jab bhi aap Portfolio Admin me koi bhi change karenge aur <strong>"Save to GitHub"</strong> click karenge, GitHub repository me directly commit ho jayega!
-                        </p>
-                    </div>
-                </div>
-            </section>
+          
 
         </div>
     </main>
