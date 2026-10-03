@@ -56,7 +56,6 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 async function showPanel() {
     loginScreen.classList.add('hidden');
     adminPanel.classList.remove('hidden');
-    initGitHubSettings();
     await loadData();
     populateAllForms();
     updateGitHubStatusUI();
@@ -121,21 +120,17 @@ function saveGitHubSettings() {
 }
 
 function updateGitHubStatusUI() {
-    const config = getGitHubConfig();
     const badge = document.getElementById('github-status-badge');
     const statusText = document.getElementById('gh-status-text');
 
     if (!badge || !statusText) return;
 
-    if (config.token) {
-        badge.className = 'gh-status-badge connected';
-        statusText.textContent = `GitHub: ${config.owner}/${config.repo}`;
-        badge.title = `Connected to GitHub (${config.owner}/${config.repo}@${config.branch}). Click to view settings.`;
-    } else {
-        badge.className = 'gh-status-badge disconnected';
-        statusText.textContent = 'GitHub: Not Connected';
-        badge.title = 'GitHub Token not configured. Click to connect for direct commits.';
-    }
+    badge.className = 'gh-status-badge connected';
+
+    statusText.textContent = 'Cloudflare Worker: Connected';
+
+    badge.title =
+        'Secure GitHub connection through Cloudflare Worker';
 }
 
 async function testGitHubConnection() {
