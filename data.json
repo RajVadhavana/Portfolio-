@@ -10,7 +10,7 @@
     "tagline": "I create beautiful, responsive websites with modern technologies. Passionate about solving problems and building digital experiences.",
     "linkedin": "https://www.linkedin.com/in/Raj_Vadhavana/",
     "github": "https://github.com/RajVadhavana",
-    "cv": "raj (1).pdf"
+    "cv": ""
   },
   "contactEmail": "rvadhavana74@gmail.com",
   "about": {
@@ -53,11 +53,6 @@
       "name": "Git",
       "icon": "https://unpkg.com/simple-icons@v9/icons/git.svg",
       "alt": "Git"
-    },
-    {
-      "name": "UI/UX Design",
-      "icon": "https://unpkg.com/simple-icons@v9/icons/adobexd.svg",
-      "alt": "UI/UX Design"
     }
   ],
   "projects": [
@@ -93,7 +88,7 @@
     {
       "role": "Web Development (Learning & Projects)",
       "company": "Academic & Self-Taught Projects",
-      "duration": "2023 - Present",
+      "duration": "2024 - Present",
       "icon": "bx bx-laptop",
       "description": "Building web applications using HTML, CSS, JavaScript, PHP, and MySQL. Creating responsive interfaces, implementing database systems, and exploring backend engineering."
     }
@@ -102,7 +97,7 @@
     {
       "degree": "B.C.A. (Bachelor of Computer Applications)",
       "institution": "B.P. College of Computer Studies",
-      "year": "2023 - Present",
+      "year": "2024 - Present",
       "icon": "bx bx-graduation"
     }
   ]
